@@ -1,0 +1,34 @@
+#formik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9FAFB;
+    padding-top: 50px;
+    padding-bottom: 50px;
+form{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    input{
+        margin: 10px 0;
+        border: none;
+        border-bottom: 1px solid #7fbaf5 ;
+        font-size: 24px;
+        outline: none;
+    }
+    button{
+        margin-top: 10px;
+        border: none;
+        background-color: #7fbaf5;
+        color: white;
+        padding: 9px 0px;
+        border-radius: 2px;
+    }
+    .error{
+        color: red;
+    }
+}
+}
+#admin-table{
+
+}
