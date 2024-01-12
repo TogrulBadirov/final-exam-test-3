@@ -11,7 +11,6 @@ const AddPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState(null);
   const { wishlist, addToWishlist } = useContext(WishlistContext);
-  const [maxPrice, setMaxPrice] = useState();
 
 
   const getAllServices = async () => {
@@ -24,9 +23,6 @@ const AddPage = () => {
   };
   const onChange = (e) => {
     console.log("onChangeE: ", e.target.value);
-  };
-  const customSort = (e) => {
-    return sort((a, b) => (a.title < b.title ? 1 : b.title < a.title ? -1 : 0));
   };
   useEffect(() => {
     getAllServices();
@@ -41,10 +37,10 @@ const AddPage = () => {
           initialValues={{ image: "", title: "", detail: "" }}
           validationSchema={Yup.object({
             image: Yup.string()
-              .matches(
-                /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/,
-                "Must be a URL!"
-              )
+              // .matches(
+              //   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/,
+              //   "Must be a URL!"
+              // )
               .required("Required"),
             title: Yup.string()
               .max(20, "Must be 20 characters or less")
@@ -108,7 +104,7 @@ const AddPage = () => {
             id=""
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
           <button
             onClick={() => setSortValue({ property: "title", acs: false })}
           >
@@ -143,23 +139,16 @@ const AddPage = () => {
             </thead>
             <tbody>
               {services &&
+              //a.title
                 services
                   .filter((item) =>
                     item.title.toLowerCase().includes(searchValue.toLowerCase())
                   )
                   .sort((a, b) => {
                     if (sortValue && sortValue.acs === true) {
-                      return a[sortValue.property] > b[sortValue.property]
-                        ? 1
-                        : b[sortValue.property] > a[sortValue.property]
-                        ? -1
-                        : 0;
+                      return b[sortValue.property].localeCompare(a[sortValue.property])
                     } else if (sortValue && sortValue.acs === false) {
-                      return a[sortValue.property] < b[sortValue.property]
-                        ? 1
-                        : b[sortValue.property] < a[sortValue.property]
-                        ? -1
-                        : 0;
+                      return a[sortValue.property].localeCompare(b[sortValue.property])                   
                     } else {
                       return 0;
                     }
